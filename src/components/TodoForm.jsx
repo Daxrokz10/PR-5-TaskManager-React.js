@@ -13,9 +13,9 @@ function TodoForm({ handleSubmit, handleInput, task }) {
             <label htmlFor="taskpriority" className='form-label'>Task Priority</label>
             <select onChange={handleInput} name="taskpriority" id="taskpriority" className='form-control'>
               <option value="" disabled>---Set Priority---</option>
-              <option value="high" className='text-danger'>High</option>
-              <option value="medium" className='text-warning'>Medium</option>
-              <option value="low" className='text-success'>Low</option>
+              <option value="High" className='text-danger'>High</option>
+              <option value="Medium" className='text-warning'>Medium</option>
+              <option value="Low" className='text-success'>Low</option>
             </select>
             <button type="submit" className='btn btn-outline-success mt-2'>Submit</button>
           </form>
