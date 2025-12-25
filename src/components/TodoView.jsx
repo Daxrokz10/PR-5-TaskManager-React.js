@@ -1,62 +1,76 @@
 import React from 'react'
 
-function TodoView({ list, totalPages, handlePagination ,handleDelete , handleEdit ,startIndex , currentPage}) {
+function TodoView({ list, totalPages, handlePagination, handleDelete, handleEdit, startIndex, currentPage }) {
   return (
     <div>
-      <div className="card-ish mt-4">
-        <h5 style={{ marginBottom: 12 }}>Employee</h5>
+      <div className="table-card">
+        <div className="table-header">
+          <h5>Tasks</h5>
+        </div>
         <div className="table-responsive">
-          <table className="table table-striped">
+          <table className="custom-table">
             <thead>
               <tr>
-                <th>Sr.no</th>
+                <th style={{ width: '50px' }}>No.</th>
                 <th>Task Name</th>
-                <th>Description</th>
-                <th>Priority</th>
-                <th>Action</th>
+                <th style={{ width: '200px' }}>Description</th>
+                <th style={{ width: '100px' }}>Priority</th>
+                <th style={{ width: '150px' }}>Action</th>
               </tr>
             </thead>
             <tbody>
               {list.length !== 0 ? (
                 list.map((task, index) => (
                   <tr key={task.id}>
-                    <td>{startIndex + index + 1}</td>
-                    <td>{task.taskname}</td>
-                    <td style={{ maxWidth: 260, whiteSpace: 'normal', wordBreak: 'break-word' }}>{task.taskdes}</td>
-                    <td>{task.taskpriority}</td>
+                    <td className="sr-no">{startIndex + index + 1}</td>
+                    <td className="fw-500">{task.taskname}</td>
+                    <td style={{ maxWidth: 200, whiteSpace: 'normal', wordBreak: 'break-word' }}>
+                      {task.taskdes}
+                    </td>
                     <td>
-                      <button className="btn btn-sm btn-danger me-2" onClick={() => handleDelete(task.id)}>Delete</button>
-                      <button className="btn btn-sm btn-warning" onClick={() => handleEdit(task.id)}>Edit</button>
+                      <span className={`priority-badge priority-${task.taskpriority.toLowerCase()}`}>
+                        {task.taskpriority}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="action-buttons">
+                        <button className="btn-delete" onClick={() => handleDelete(task.id)}>Delete</button>
+                        <button className="btn-edit" onClick={() => handleEdit(task.id)}>Edit</button>
+                      </div>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} style={{ textAlign: 'center' }}>No data available</td>
+                  <td colSpan={5}>
+                    <div className="empty-state">
+                      <div className="empty-state-icon">📋</div>
+                      <p>No tasks yet. Create your first task to get started!</p>
+                    </div>
+                  </td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
       </div>
-      <div className="row justify-content-center mt-2 mb-5 ">
-        <div className="col-12 d-flex">
-          {
-            [...Array(totalPages)].map((_, i) => {
-              const pageNum = i + 1;
-              return (
-                <button
-                  key={i}
-                  onClick={() => handlePagination(pageNum)}
-                  className={`btn ${currentPage === pageNum ? 'btn-primary' : 'btn-outline-primary'}`}
-                >
-                  {pageNum}
-                </button>
-              )
-            })
-          }
+
+      {totalPages > 1 && (
+        <div className="pagination-container">
+          {[...Array(totalPages)].map((_, i) => {
+            const pageNum = i + 1;
+            return (
+              <button
+                key={i}
+                onClick={() => handlePagination(pageNum)}
+                className={`pagination-btn ${currentPage === pageNum ? 'active' : ''}`}
+              >
+                {pageNum}
+              </button>
+            )
+          })}
         </div>
-      </div>
+      )}
     </div>
   )
 }

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import TodoForm from './components/TodoForm';
 import TodoView from './components/TodoView';
+import './App.css';
 
 const App = () => {
 
   const [task, setTask] = useState({});
   const [list, setList] = useState([]);
-  const [masterlist, setMasterlist] = useState([]); //SOT list for filter and stuff
+  const [masterlist, setMasterlist] = useState([]);
   const [mount, setMount] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const taskPerPage = 10;
@@ -63,8 +64,12 @@ const App = () => {
   }
 
   return (
-    <div>
-      <div className="container">
+    <div className="app-container">
+      <div className="content-wrapper">
+        <div className="header">
+          <h1>Task Manager</h1>
+          <p>Organize your tasks efficiently</p>
+        </div>
         <TodoForm handleSubmit={handleSubmit} handleInput={handleInput} task={task} />
         <TodoView
           list={currentItems}
